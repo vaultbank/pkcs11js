@@ -47,6 +47,10 @@ public:
 	// static NAN_METHOD(C_SetOperationState);
 	static NAN_METHOD(C_Login);
 	static NAN_METHOD(C_Logout);
+	//nshield specific methods
+	static NAN_METHOD(C_LoginBegin);
+	static NAN_METHOD(C_LoginNext);
+	static NAN_METHOD(C_LoginEnd);
 	
 	///* Object management */
 	static NAN_METHOD(C_CreateObject);
