@@ -385,6 +385,44 @@ void PKCS11::C_Logout(CK_SESSION_HANDLE hSession) {
 	}
 	CATCH_ERROR;
 }
+void PKCS11::C_LoginBegin(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pulK, Scoped<string> pulN) {
+	try {
+
+		CHECK_PKCS11_RV(functionList->C_LoginBegin(
+			hSession,
+			userType,
+			pulK,
+			pulN
+		));
+
+	}
+	CATCH_ERROR;
+}
+void PKCS11::C_LoginNext(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pPin,Scoped<string> ulPinLen,Scoped<string> pulSharesLeft) {
+	try {
+
+		CHECK_PKCS11_RV(functionList->C_LoginNext(
+			hSession,
+			userType,
+			pPin->length() ? (CK_UTF8CHAR_PTR)pPin->c_str() : NULL_PTR,
+			ulPinLen,
+			pulSharesLeft
+		));
+
+	}
+	CATCH_ERROR;
+}
+void PKCS11::C_LoginEnd(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType) {
+	try {
+
+		CHECK_PKCS11_RV(functionList->C_LoginEnd(
+			hSession,
+			userType
+			));
+
+	}
+	CATCH_ERROR;
+}
 
 void PKCS11::C_FindObjectsInit(CK_SESSION_HANDLE hSession, Scoped<Attributes> attrs) {
 	try {

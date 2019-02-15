@@ -167,6 +167,9 @@ void WPKCS11::Init(Handle<Object> exports) {
 	SET_PKCS11_METHOD(C_GetSessionInfo);
 	SET_PKCS11_METHOD(C_Login);
 	SET_PKCS11_METHOD(C_Logout);
+	SET_PKCS11_METHOD(C_LoginBegin);
+	SET_PKCS11_METHOD(C_LoginNext);
+	SET_PKCS11_METHOD(C_LoginEnd);
 	SET_PKCS11_METHOD(C_CreateObject);
 	SET_PKCS11_METHOD(C_CopyObject);
 	SET_PKCS11_METHOD(C_DestroyObject);
@@ -596,6 +599,56 @@ NAN_METHOD(WPKCS11::C_Login) {
 		Scoped<string> pin = get_string(info[2]);
 
 		__pkcs11->C_Login(hSession, userType, pin);
+
+		info.GetReturnValue().SetNull();
+	}
+	CATCH_V8_ERROR;
+}
+NAN_METHOD(WPKCS11::C_LoginBegin) {
+	try {
+		GET_SESSION_HANDLE(hSession, 0);
+
+		CHECK_REQUIRED(1);
+		CK_USER_TYPE userType = Nan::To<v8::Number>(info[1]).ToLocalChecked()->Uint32Value();
+
+		UNWRAP_PKCS11;
+
+		Scoped<string> pulK = get_string(info[2]);
+		Scoped<string> pulN = get_string(info[3]);
+
+		__pkcs11->C_LoginBegin(hSession, userType, pulK,pulN);
+
+		info.GetReturnValue().SetNull();
+	}
+	CATCH_V8_ERROR;
+}
+NAN_METHOD(WPKCS11::C_LoginNext) {
+	try {
+		GET_SESSION_HANDLE(hSession, 0);
+
+		CHECK_REQUIRED(1);
+		CK_USER_TYPE userType = Nan::To<v8::Number>(info[1]).ToLocalChecked()->Uint32Value();
+
+		UNWRAP_PKCS11;
+
+		Scoped<string> pPin = get_string(info[2]);
+		Scoped<string> ulPinLen = get_string(info[3]);
+		Scoped<string> pulSharesLeft = get_string(info[4]);
+		__pkcs11->C_LoginNext(hSession, userType, pPin,ulPinLen,pulSharesLeft);
+
+		info.GetReturnValue().SetNull();
+	}
+	CATCH_V8_ERROR;
+}
+NAN_METHOD(WPKCS11::C_LoginEnd) {
+	try {
+		GET_SESSION_HANDLE(hSession, 0);
+
+		CK_USER_TYPE userType = Nan::To<v8::Number>(info[1]).ToLocalChecked()->Uint32Value();
+
+		UNWRAP_PKCS11;
+
+		__pkcs11->C_LoginEnd(hSession, userType);
 
 		info.GetReturnValue().SetNull();
 	}
