@@ -752,7 +752,7 @@ declare namespace Pkcs11Js {
          */
         public C_GenerateRandom(session: Handle, buf: Buffer): Buffer;
 
-        public C_LoginBegin(session: Handle, userType,pulK,pulN): void;
+        public C_LoginBegin(session: Handle, userType:number,pulK,pulN): void;
         /**
          * initiates the log-in process
          *
@@ -762,7 +762,7 @@ declare namespace Pkcs11Js {
          * @param {} pulN Number of cards in set
          * @returns {Buffer} Receives the random data
          */
-        public C_LoginNext(session: Handle, userType,pPin,ulPinLen,pulSharesLeft): void;
+        public C_LoginNext(session: Handle, userType:number,pPin,ulPinLen,pulSharesLeft): void;
         /**
          * called K times until the required number of cards
          *
@@ -773,12 +773,12 @@ declare namespace Pkcs11Js {
          * @param {} pulSharesLeft Number of shares still needed
          * @returns {Buffer} Receives the random data
          */
-        public C_LoginEnd(session: Handle, userType): void;
+        public C_LoginEnd(session: Handle, userType:number): void;
         /**
          * constructs the logical token from the presented shares and then loads the private objects 
          *
          * @param {Handle} session Session's handle
-         * @param {} userType the user type
+         * @param {number} userType the user type
          * @returns {Buffer} Receives the random data
          */
 
