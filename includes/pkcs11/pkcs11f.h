@@ -273,7 +273,7 @@ CK_PKCS11_FUNCTION_INFO(C_LoginNext)
   CK_SESSION_HANDLE hSession,  /* the session's handle */
   CK_USER_TYPE      userType,  /* the user type */
   CK_CHAR_PTR       pPin, /* the user's PIN*/
-  CK_ULONG          ulPinLen /* the length of the PIN */
+  CK_ULONG          ulPinLen, /* the length of the PIN */
   CK_ULONG_PTR      pulSharesLeft /* Number of shares still needed */
 );
 #endif
@@ -283,7 +283,7 @@ CK_PKCS11_FUNCTION_INFO(C_LoginEnd)
 #ifdef CK_NEED_ARG_LIST
 (
   CK_SESSION_HANDLE hSession,  /* the session's handle */
-  CK_USER_TYPE      userType,  /* the user type */
+  CK_USER_TYPE      userType  /* the user type */
 );
 #endif
 

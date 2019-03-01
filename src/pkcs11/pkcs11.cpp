@@ -385,28 +385,29 @@ void PKCS11::C_Logout(CK_SESSION_HANDLE hSession) {
 	}
 	CATCH_ERROR;
 }
-void PKCS11::C_LoginBegin(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pulK, Scoped<string> pulN) {
+void PKCS11::C_LoginBegin(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType) {
 	try {
-
+		CK_ULONG ulK= 2;
+		CK_ULONG ulN = 3;
 		CHECK_PKCS11_RV(functionList->C_LoginBegin(
 			hSession,
 			userType,
-			pulK,
-			pulN
+			&ulK,
+			&ulN
 		));
 
 	}
 	CATCH_ERROR;
 }
-void PKCS11::C_LoginNext(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pPin,Scoped<string> ulPinLen,Scoped<string> pulSharesLeft) {
+void PKCS11::C_LoginNext(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pPin,Scoped<string> ulSharesLeft) {
 	try {
-
+		CK_ULONG pulSharesLeft= 2;
 		CHECK_PKCS11_RV(functionList->C_LoginNext(
 			hSession,
 			userType,
 			pPin->length() ? (CK_UTF8CHAR_PTR)pPin->c_str() : NULL_PTR,
-			ulPinLen,
-			pulSharesLeft
+			(CK_ULONG)pPin->length(),
+			&pulSharesLeft
 		));
 
 	}

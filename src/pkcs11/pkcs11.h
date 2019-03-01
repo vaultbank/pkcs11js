@@ -46,9 +46,9 @@ public:
 	void C_Logout(CK_SESSION_HANDLE session);
 
 	//nshield specific methods
-	void C_LoginBegin(CK_SESSION_HANDLE session, CK_USER_TYPE userType, CK_ULONG_PTR pulK, CK_ULONG_PTR pulN)
-	void C_LoginNext(CK_SESSION_HANDLE session, CK_USER_TYPE userType,CK_CHAR_PTR pPin,CK_ULONG ulPinLen,CK_ULONG_PTR pulSharesLeft)
-	void C_LoginEnd(CK_SESSION_HANDLE session,CK_USER_TYPE userType)
+	void C_LoginBegin(CK_SESSION_HANDLE session, CK_USER_TYPE userType);
+	void C_LoginNext(CK_SESSION_HANDLE session, CK_USER_TYPE userType,Scoped<string> pPin,Scoped<string> pulSharesLeft);
+	void C_LoginEnd(CK_SESSION_HANDLE session,CK_USER_TYPE userType);
 	//
 	///* Object management */
 	CK_OBJECT_HANDLE C_CreateObject(CK_SESSION_HANDLE session, Scoped<Attributes> tmpl);

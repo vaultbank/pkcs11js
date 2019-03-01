@@ -613,10 +613,10 @@ NAN_METHOD(WPKCS11::C_LoginBegin) {
 
 		UNWRAP_PKCS11;
 
-		Scoped<string> pulK = get_string(info[2]);
-		Scoped<string> pulN = get_string(info[3]);
+		// CK_ULONG_PTR pulK = (CK_ULONG_PTR)get_string(info[2]);
+		// CK_ULONG_PTR pulN = (CK_ULONG_PTR)get_string(info[3]);
 
-		__pkcs11->C_LoginBegin(hSession, userType, pulK,pulN);
+		__pkcs11->C_LoginBegin(hSession, userType);
 
 		info.GetReturnValue().SetNull();
 	}
@@ -632,9 +632,10 @@ NAN_METHOD(WPKCS11::C_LoginNext) {
 		UNWRAP_PKCS11;
 
 		Scoped<string> pPin = get_string(info[2]);
-		Scoped<string> ulPinLen = get_string(info[3]);
-		Scoped<string> pulSharesLeft = get_string(info[4]);
-		__pkcs11->C_LoginNext(hSession, userType, pPin,ulPinLen,pulSharesLeft);
+		Scoped<string> ulSharesLeft = get_string(info[3]);
+		// CK_ULONG_PTR pulSharesLeft = (CK_ULONG_PTR)get_string(info[4]);
+
+		__pkcs11->C_LoginNext(hSession, userType, pPin,ulSharesLeft);
 
 		info.GetReturnValue().SetNull();
 	}
