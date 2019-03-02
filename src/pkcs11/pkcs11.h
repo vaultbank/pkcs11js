@@ -46,10 +46,10 @@ public:
 	void C_Logout(CK_SESSION_HANDLE session);
 
 	//nshield specific methods
-	void C_LoginBegin(CK_SESSION_HANDLE session, CK_USER_TYPE userType);
-	void C_LoginNext(CK_SESSION_HANDLE session, CK_USER_TYPE userType,Scoped<string> pPin,Scoped<string> pulSharesLeft);
-	void C_LoginEnd(CK_SESSION_HANDLE session,CK_USER_TYPE userType);
-	//
+	std::pair<CK_ULONG, CK_ULONG> C_LoginBegin(CK_SESSION_HANDLE session, CK_USER_TYPE userType);
+	CK_ULONG C_LoginNext(CK_SESSION_HANDLE session, CK_USER_TYPE userType, Scoped<string> pPin);
+	void C_LoginEnd(CK_SESSION_HANDLE session, CK_USER_TYPE userType);
+
 	///* Object management */
 	CK_OBJECT_HANDLE C_CreateObject(CK_SESSION_HANDLE session, Scoped<Attributes> tmpl);
 	CK_OBJECT_HANDLE C_CopyObject(CK_SESSION_HANDLE session, CK_OBJECT_HANDLE object, Scoped<Attributes> tmpl);
@@ -127,6 +127,37 @@ protected:
 
 	void* dlHandle;
 	CK_FUNCTION_LIST_PTR functionList;
+
+	// Thales extensions
+	/* C_LoginBegin logs a user into a token. */
+	typedef CK_RV (TYPE_C_LoginBegin)
+		(
+			CK_SESSION_HANDLE hSession,  /* the session's handle */
+			CK_USER_TYPE      userType,  /* the user type */
+			CK_ULONG_PTR      pulK, /* cards required to load logical token*/ 
+			CK_ULONG_PTR      pulN /* Number of cards in set */
+		);
+
+	/* C_LoginNext logs a user into a token. */
+	typedef CK_RV (TYPE_C_LoginNext)
+		(
+			CK_SESSION_HANDLE hSession,  /* the session's handle */
+			CK_USER_TYPE      userType,  /* the user type */
+			CK_CHAR_PTR       pPin, /* the user's PIN*/
+			CK_ULONG          ulPinLen, /* the length of the PIN */
+			CK_ULONG_PTR      pulSharesLeft /* Number of shares still needed */
+		);
+
+	/* C_LoginEnd logs a user into a token. */
+	typedef CK_RV (TYPE_C_LoginEnd)
+		(
+			CK_SESSION_HANDLE hSession,  /* the session's handle */
+			CK_USER_TYPE      userType  /* the user type */
+		);
+
+	TYPE_C_LoginBegin * c_loginBegin;
+	TYPE_C_LoginNext * c_loginNext;
+	TYPE_C_LoginEnd * c_loginEnd;
 };
 
 #endif // INCLUDE_H_PKCS11

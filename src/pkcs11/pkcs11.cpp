@@ -149,6 +149,10 @@ void PKCS11::Load(Scoped<string> path) {
 		CHECK_PKCS11_RV(f_C_GetFunctionList(&functionList));
         
         libPath = path;
+
+		this->c_loginBegin = dlsym(dlHandle, "C_LoginBegin");
+		this->c_loginNext = dlsym(dlHandle, "C_LoginNext");
+		this->c_loginEnd = dlsym(dlHandle, "C_LoginEnd");
 	}
 	CATCH_ERROR;
 }
@@ -385,38 +389,41 @@ void PKCS11::C_Logout(CK_SESSION_HANDLE hSession) {
 	}
 	CATCH_ERROR;
 }
-void PKCS11::C_LoginBegin(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType) {
+
+std::pair<CK_ULONG, CK_ULONG> PKCS11::C_LoginBegin(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType) {
 	try {
-		CK_ULONG ulK= 2;
-		CK_ULONG ulN = 3;
-		CHECK_PKCS11_RV(functionList->C_LoginBegin(
+		CK_ULONG ulK = 0;
+		CK_ULONG ulN = 0;
+		CHECK_PKCS11_RV(this->c_loginBegin(
 			hSession,
 			userType,
 			&ulK,
 			&ulN
 		));
-
+		return std::pair(ulK, ulN);
 	}
 	CATCH_ERROR;
 }
-void PKCS11::C_LoginNext(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pPin,Scoped<string> ulSharesLeft) {
+
+CK_ULONG PKCS11::C_LoginNext(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType, Scoped<string> pPin,Scoped<string> ulSharesLeft) {
 	try {
 		CK_ULONG pulSharesLeft= 2;
-		CHECK_PKCS11_RV(functionList->C_LoginNext(
+		CHECK_PKCS11_RV(this->c_loginNext(
 			hSession,
 			userType,
 			pPin->length() ? (CK_UTF8CHAR_PTR)pPin->c_str() : NULL_PTR,
 			(CK_ULONG)pPin->length(),
 			&pulSharesLeft
 		));
-
+		return pulSharesLeft;
 	}
 	CATCH_ERROR;
 }
+
 void PKCS11::C_LoginEnd(CK_SESSION_HANDLE hSession, CK_USER_TYPE userType) {
 	try {
 
-		CHECK_PKCS11_RV(functionList->C_LoginEnd(
+		CHECK_PKCS11_RV(this->c_loginEnd(
 			hSession,
 			userType
 			));
