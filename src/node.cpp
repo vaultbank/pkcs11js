@@ -604,6 +604,7 @@ NAN_METHOD(WPKCS11::C_Login) {
 	}
 	CATCH_V8_ERROR;
 }
+
 NAN_METHOD(WPKCS11::C_LoginBegin) {
 	try {
 		GET_SESSION_HANDLE(hSession, 0);
@@ -613,15 +614,20 @@ NAN_METHOD(WPKCS11::C_LoginBegin) {
 
 		UNWRAP_PKCS11;
 
-		// CK_ULONG_PTR pulK = (CK_ULONG_PTR)get_string(info[2]);
-		// CK_ULONG_PTR pulN = (CK_ULONG_PTR)get_string(info[3]);
+		std::pair<CK_ULONG, CK_ULONG> kn = __pkcs11->C_LoginBegin(hSession, userType);
 
-		__pkcs11->C_LoginBegin(hSession, userType);
-
-		info.GetReturnValue().SetNull();
+		v8::Local<v8::String> kProp = Nan::New("k").ToLocalChecked();
+		v8::Local<v8::String> nProp = Nan::New("n").ToLocalChecked();
+        v8::Local<v8::Number> kValue = Nan::New<Number>(kn.first);
+		v8::Local<v8::Number> nValue = Nan::New<Number>(kn.second);
+		v8::Local<v8::Object> jsonObject = Nan::New<v8::Object>();
+		Nan::Set(jsonObject, kProp, kValue);
+		Nan::Set(jsonObject, nProp, nValue);
+		info.GetReturnValue().Set(jsonObject);
 	}
 	CATCH_V8_ERROR;
 }
+
 NAN_METHOD(WPKCS11::C_LoginNext) {
 	try {
 		GET_SESSION_HANDLE(hSession, 0);
@@ -632,15 +638,13 @@ NAN_METHOD(WPKCS11::C_LoginNext) {
 		UNWRAP_PKCS11;
 
 		Scoped<string> pPin = get_string(info[2]);
-		Scoped<string> ulSharesLeft = get_string(info[3]);
-		// CK_ULONG_PTR pulSharesLeft = (CK_ULONG_PTR)get_string(info[4]);
+		CK_ULONG ulRemaining = __pkcs11->C_LoginNext(hSession, userType, pPin);
 
-		__pkcs11->C_LoginNext(hSession, userType, pPin,ulSharesLeft);
-
-		info.GetReturnValue().SetNull();
+		info.GetReturnValue().Set(Nan::New<Number>(ulRemaining));
 	}
 	CATCH_V8_ERROR;
 }
+
 NAN_METHOD(WPKCS11::C_LoginEnd) {
 	try {
 		GET_SESSION_HANDLE(hSession, 0);
