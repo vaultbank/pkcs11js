@@ -757,11 +757,9 @@ declare namespace Pkcs11Js {
          *
          * @param {Handle} session Session's handle
          * @param {} userType the user type
-         * @param {} pulK cards required to load logical token
-         * @param {} pulN Number of cards in set
-         * @returns {Buffer} Receives the random data
+         * @returns {k: number, n: number} quorum numbers
          */
-        public C_LoginBegin(session: Handle, userType:number): void;
+        public C_LoginBegin(session: Handle, userType:number): any;
         
         /**
          * called K times until the required number of cards
@@ -769,11 +767,9 @@ declare namespace Pkcs11Js {
          * @param {Handle} session Session's handle
          * @param {} userType the user type
          * @param {} pPin the user's PIN
-         * @param {} ulPinLen Number of cards in set
-         * @param {} pulSharesLeft Number of shares still needed
-         * @returns {Buffer} Receives the random data
+         * @returns {number} returns remaining cards
          */
-        public C_LoginNext(session: Handle, userType:number,pPin,ulPinLen,pulSharesLeft): void;
+        public C_LoginNext(session: Handle, userType:number, pPin): number;
         
 
         /**
@@ -781,7 +777,6 @@ declare namespace Pkcs11Js {
          *
          * @param {Handle} session Session's handle
          * @param {number} userType the user type
-         * @returns {Buffer} Receives the random data
          */
         public C_LoginEnd(session: Handle, userType:number): void;
         
