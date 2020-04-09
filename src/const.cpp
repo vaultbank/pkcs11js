@@ -519,6 +519,18 @@ void declare_mechanisms(Local<Object> target) {
 	SET_CONST(target, CKM_RSA_PKCS_TPM_1_1);
 	SET_CONST(target, CKM_RSA_PKCS_OAEP_TPM_1_1);
 	SET_CONST(target, CKM_VENDOR_DEFINED);
+
+	/**
+	 * EdDSA CK_Mechanism
+	 * - CKM_EC_EDWARDS_KEY_PAIR_GEN is to be used for KeyPair generation
+	 *   either using PKCS11 C_GenerateKey, C_GenerateKeyPair
+	 * - CKM_EDDSA for signing using PKCS11 C_SignInit
+	 */
+	SET_CONST(target, CKM_EC_EDWARDS_KEY_PAIR_GEN);
+	SET_CONST(target, CKM_EDDSA);
+
+	SET_CONST(target, CKK_EC_EDWARDS);
+
 }
 
 void declare_certificates(Local<Object> target) {

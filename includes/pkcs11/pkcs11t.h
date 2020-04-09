@@ -930,6 +930,14 @@ typedef CK_ULONG          CK_MECHANISM_TYPE;
 #define CKM_RSA_PKCS_TPM_1_1           0x00004001
 #define CKM_RSA_PKCS_OAEP_TPM_1_1      0x00004002
 
+/**
+ * EdDSA CKM(CK_Mechanism), CKK(CK_KeyType) from PKCS v3.0.0
+ * https://github.com/oasis-tcs/pkcs11/blob/5bd69a7d03788c370f5d0309f2593093a1586d9e/working/3-00-current/pkcs11t.h#L1125
+ */
+#define CKM_EC_EDWARDS_KEY_PAIR_GEN    0x00001055UL
+#define CKM_EDDSA                      0x00001057UL
+#define CKK_EC_EDWARDS                 0x00000040UL
+
 #define CKM_VENDOR_DEFINED             0x80000000
 
 typedef CK_MECHANISM_TYPE CK_PTR CK_MECHANISM_TYPE_PTR;

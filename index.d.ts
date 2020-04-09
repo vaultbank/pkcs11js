@@ -1326,4 +1326,11 @@ declare namespace Pkcs11Js {
     const CKF_LIBRARY_CANT_CREATE_OS_THREADS: number;
     const CKF_OS_LOCKING_OK: number;
 
+    // EdDSA CK_Mechanism types definition for PKCS11
+    const CKM_EC_EDWARDS_KEY_PAIR_GEN: number;
+    const CKM_EDDSA: number;
+
+    // EdDSA CK_KeyType types definition for PKCS11
+    const CKK_EC_EDWARDS: number;
+
 }
