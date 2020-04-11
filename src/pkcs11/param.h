@@ -44,6 +44,7 @@ protected:
 #define CK_PARAMS_RSA_PSS		    5
 #define CK_PARAMS_EC_DH			    6
 #define CK_PARAMS_AES_GCM_v240      7
+#define CK_PARAMS_EDDSA             8
 
 class ParamBuffer : public ParamBase {
 public:
@@ -126,6 +127,18 @@ class ParamEcdh1 : public Param<CK_ECDH1_DERIVE_PARAMS> {
 public:
     ParamEcdh1() : Param(CK_PARAMS_EC_DH) { Init(); }
     ~ParamEcdh1() { Free(); }
+    void FromV8(Local<Value> v8Obj) override;
+protected:
+    void Init();
+    void Free();
+};
+
+// EdDSA
+
+class ParamEdDSA : public Param<CK_EDDSA_PARAMS> {
+public:
+    ParamEdDSA() : Param(CK_PARAMS_EDDSA) { Init(); }
+    ~ParamEdDSA() { Free(); }
     void FromV8(Local<Value> v8Obj) override;
 protected:
     void Init();

@@ -133,6 +133,11 @@ declare namespace Pkcs11Js {
         saltLen: number;
     }
 
+    interface EdDSA extends IParams {
+        phFlag: boolean;
+        contextData?: Buffer;
+    }
+
     interface KeyPair {
         privateKey: Handle;
         publicKey: Handle;
@@ -1314,6 +1319,7 @@ declare namespace Pkcs11Js {
     const CK_PARAMS_RSA_PSS: number;
     const CK_PARAMS_EC_DH: number;
     const CK_PARAMS_AES_GCM_v240: number;
+    const CK_PARAMS_EDDSA: number;
     //#endregion
 
     //#region User types

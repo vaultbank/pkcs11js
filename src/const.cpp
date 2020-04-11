@@ -575,6 +575,7 @@ void declare_params(Local<Object> target) {
 	SET_CONST(target, CK_PARAMS_RSA_OAEP);
 	SET_CONST(target, CK_PARAMS_RSA_PSS);
 	SET_CONST(target, CK_PARAMS_EC_DH);
+	SET_CONST(target, CK_PARAMS_EDDSA);
 }
 
 void declare_initialize_flags(Local<Object> target) {

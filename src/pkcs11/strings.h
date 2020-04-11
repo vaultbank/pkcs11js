@@ -49,3 +49,7 @@
 #define STR_SOURCE "source"
 #define STR_SOURCE_DATA "sourceData"
 #define STR_SALT_LEN "saltLen"
+
+// EdDSA
+#define STR_PH_FLAG "phFlag"
+#define STR_CONTEXT_DATA "contextData"

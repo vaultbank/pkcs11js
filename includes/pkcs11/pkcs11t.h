@@ -1822,4 +1822,16 @@ typedef struct CK_ARIA_CBC_ENCRYPT_DATA_PARAMS {
 
 typedef CK_ARIA_CBC_ENCRYPT_DATA_PARAMS CK_PTR CK_ARIA_CBC_ENCRYPT_DATA_PARAMS_PTR;
 
+/**
+ * EDDSA Parameters to identify the signature scheme to be used
+ * https://docs.oasis-open.org/pkcs11/pkcs11-curr/v3.0/cs01/pkcs11-curr-v3.0-cs01.html#_Toc30061191
+ */
+typedef struct CK_EDDSA_PARAMS {
+	CK_BBOOL phFlag;
+  CK_BYTE_PTR pContextData;
+	CK_ULONG ulContextDataLen;
+} CK_EDDSA_PARAMS;
+
+typedef CK_EDDSA_PARAMS CK_PTR CK_EDDSA_PARAMS_PTR;
+
 #endif

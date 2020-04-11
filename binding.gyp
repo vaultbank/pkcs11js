@@ -23,6 +23,7 @@
                 "src/pkcs11/param_aes.cpp",
                 "src/pkcs11/param_rsa.cpp",
                 "src/pkcs11/param_ecdh.cpp",
+                "src/pkcs11/param_eddsa.cpp",
                 "src/pkcs11/pkcs11.cpp",
                 "src/async.cpp",
                 "src/node.cpp"

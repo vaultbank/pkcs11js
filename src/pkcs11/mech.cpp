@@ -65,6 +65,10 @@ void Mechanism::FromV8(Local<Value> v8Value) {
                         param = Scoped<ParamBase>(new ParamRsaPSS);
                         break;
                     }
+                    case CK_PARAMS_EDDSA: {
+                        param = Scoped<ParamBase>(new ParamEdDSA);
+                        break;
+                    }
                     default:
                         THROW_ERROR("Unknown type Mech param in use", NULL);
                 }
