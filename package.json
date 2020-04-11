@@ -1,6 +1,6 @@
 {
   "name": "pkcs11js",
-  "version": "1.0.19",
+  "version": "1.0.21",
   "description": "A Node.js implementation of the PKCS#11 2.3 interface",
   "repository": {
     "type": "git",
@@ -39,11 +39,14 @@
     "nan": "^2.14.0"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^10.14.18",
-    "mocha": "^6.2.0"
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^10.17.18",
+    "mocha": "^7.1.1"
   },
   "bugs": {
     "url": "https://github.com/PeculiarVentures/pkcs11js/issues"
+  },
+  "mocha": {
+    "watch-files": "test/**/*.js"
   }
 }
