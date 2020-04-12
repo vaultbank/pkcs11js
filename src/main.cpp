@@ -23,4 +23,10 @@ NAN_MODULE_INIT(init)
 	declare_user_types(target);
 }
 
-NODE_MODULE(pkcs11, init)
+// Configuration for working with Worker Threads
+// See here: https://nodejs.org/api/addons.html#addons_context_aware_addons
+// NODE_MODULE(pkcs11, init)
+NODE_MODULE_INIT()
+{
+	init(exports);
+}
